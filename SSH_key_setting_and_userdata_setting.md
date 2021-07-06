@@ -128,7 +128,7 @@ sudo mv /home/ec2-user/known_hosts /home/ec2-user/.ssh/known_hosts
 
 ssh를 통한 git 명령어를 사용하기 위해서는 각 파일에 ec2-user 권한을 줘야 한다.
 다음 비트버킷의 설명을 참고 
-> You shouldn't use sudo when cloning, pushing, or pulling because the ssh-agent runs on the user level, not the root level. 
+`You shouldn't use sudo when cloning, pushing, or pulling because the ssh-agent runs on the user level, not the root level. `
 Reference : https://support.atlassian.com/bitbucket-cloud/docs/troubleshoot-ssh-issues/
 
 ### 소유권 부여
