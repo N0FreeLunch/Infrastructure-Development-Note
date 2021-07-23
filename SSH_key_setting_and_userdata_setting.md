@@ -148,6 +148,7 @@ id_rsa, id_rsa.pub는 고정 값이므로 읽기 전용만 설정하며, known_h
 
 ## root 권한으로 실행하지 못하는 문제 해결 방법
 - ec2-user 권한으로 권한 스위칭을 한 후, -c 옵션을 통해 원하는 실행할 명령어를 입력한다.
+- clone 이후 계속 작업을 root 권한으로 이어 나가야 하기 때문에 특정 명령어를 실행하는 부분에서만 권한 스위칭을 하기 위해 다음과 같은 방식을 사용한다.
 
 ```
 su ec2-user -c "git clone -b branch_name git@bitbucket/userOrGroupName/repository_name.git"
