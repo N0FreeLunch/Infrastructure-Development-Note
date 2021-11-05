@@ -24,4 +24,4 @@ RUN npm --version
 - https://pm2.keymetrics.io/docs/usage/quick-start/
 - 로컬에서  도커에서 명령을 실행할 폴더로 가서 `pm2 start "npm run watch"`을 실행한다.
 - watch 모드를 실행하지 않는다면 굳이 pm2를 통해서 관리할 필요가 없다.
-- 로컬 환경에서 도커 기동 시 webpack의 로그를 확인하고 싶다면 `docker-compose exec target_docker_name pm2 logs`를 실행해서 도커에서 실행되고 있는 webpack의 watch 모드를 확인할 수 있다.
+- 로컬 환경에서 도커 기동 시 webpack의 로그를 확인하고 싶다면 `docker-compose exec target_docker_name pm2 logs`를 실행해서 도커에서 실행되고 있는 webpack의 watch 모드의  확인할 수 있다.
