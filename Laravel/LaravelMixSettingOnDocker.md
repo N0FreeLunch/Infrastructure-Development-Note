@@ -1,5 +1,7 @@
 ## 노드 JS 설치 코드
 - Reference : https://stackoverflow.com/questions/36399848/install-node-in-dockerfile
+
+#### root 권한으로 NVM, NODE 실행
 ```dockerfile
 ENV NODE_VERSION=16.13.0
 RUN apt install -y curl
@@ -14,6 +16,22 @@ RUN npm --version
 ```
 - 현재 NodeJS 버전을 입력 해 준다.
 - 최신 NVM 버전을 입력 해 준다. (`https://github.com/nvm-sh/nvm`에서 최신 NVM 버전을 확인한다.)
+
+#### USER 권한으로 NVM, NODE 실행
+```dockerfile
+ENV NODE_VERSION=16.13.0
+RUN apt install -y curl
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+ENV NVM_DIR=/home/유저_네임/.nvm
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+ENV PATH="/home/유저_네임/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+RUN node --version
+RUN npm --version
+```
+- 특정 리눅스 유저로 nvm, node 명령어를 실행하기 위한 설치 방법이다.
+- 설치하기에 앞서 리눅스 유저를 만들어야 하며, 해당 리눅스 유저는 홈 디렉토리가 생성되는 옵션인 \-m 옵션을 붙여서 만들어 줘야 한다. (linux useradd 옵션을 )
 
 ## nodeJS로 빌드하기
 - `npm start` 또는 라라벨 mix의 `npm run watch`를 사용할 때 작업이 끝나지 않고 프로세스가 계속 실행되어 버리기 때문에 도커 실행 로직이 중간에 막혀 버린다. 따라서 도커에서 이런 watch 모드를 실행하기 위해서는 별도의 프로세스로 분리해서 실행하는 것이 필요하며, 하나의 프로세스로 켜지며 외부에서 컨트롤 되어야 한다. 따라서 PM2를 사용해서 컨트롤 하는 방식을 사용한다.
