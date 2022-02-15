@@ -16,6 +16,7 @@ RUN npm --version
 ```
 - 현재 NodeJS 버전을 입력 해 준다.
 - 최신 NVM 버전을 입력 해 준다. (`nvm/v0.34.0/install.sh` 부분, `https://github.com/nvm-sh/nvm`에서 최신 NVM 버전을 확인한다.)
+- 종속성 패키지를 인스톨 할 때는 root 권한을 사용하는 것을 권장하지 않는다. 패키지 인스톨이 될 때 패키지 내의 코드를 실행할 수 있고 root 권한으로 패키지 내의 코드가 실행될 수 있기 때문이다. 이로 인해서 서버의 제어권 및 프로젝트 폴더의 모든 파일 및 폴더에 대한 조작 권한을 인스톨 될 패키지에게 주게된다.
 
 #### USER 권한으로 NVM, NODE 실행
 ```dockerfile
@@ -43,6 +44,12 @@ RUN npm --version
 - 로컬에서  도커에서 명령을 실행할 폴더로 가서 `pm2 start "npm run watch"`을 실행한다.
 - watch 모드를 실행하지 않는다면 굳이 pm2를 통해서 관리할 필요가 없다.
 - 로컬 환경에서 도커 기동 시 webpack의 로그를 확인하고 싶다면 `docker-compose exec target_docker_name pm2 logs`를 실행해서 도커에서 실행되고 있는 webpack의 watch 모드의  확인할 수 있다.
+
+#### watch 모드 시 에러 해결
+- node_modules 폴더에 실행 권한을 부여하지 않으면 watch 모드가 동작하지 못하고 권한 에러를 뱉을 수 있다.
+```
+RUN chmod a+x node_modules
+```
 
 ## 설치 및 실행 시 리눅스 권한 바꾸기
 - `npm install`을 하거나 `npm run ...` 명령어를 사용할 때, root 유저로 실행하는 것은 실행되는 패키지에 악성 코드가 있을 경우 보안 문제가 발생할 수 있다. 따라서 가능하면 user 계정으로 리눅스 권한을 바꾼 뒤에 npm 명령을 실행하는 방법을 사용해야 한다.
