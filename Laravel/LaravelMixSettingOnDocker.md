@@ -45,11 +45,13 @@ RUN npm --version
 - watch 모드를 실행하지 않는다면 굳이 pm2를 통해서 관리할 필요가 없다.
 - 로컬 환경에서 도커 기동 시 webpack의 로그를 확인하고 싶다면 `docker-compose exec target_docker_name pm2 logs`를 실행해서 도커에서 실행되고 있는 webpack의 watch 모드의  확인할 수 있다.
 
-#### watch 모드 시 에러 해결
+### watch 모드 시 에러 해결
 - node_modules 폴더에 실행 권한을 부여하지 않으면 watch 모드가 동작하지 못하고 권한 에러를 뱉을 수 있다.
 ```
 RUN chmod a+x node_modules
 ```
+- 프로덕션 서버에서는 빌드된 파일을 사용하기 때문에 node_modules의 종속성 패키지를 직접 실행할 필요가 없다. 따라서 서버 환경에서는 실행 권한을 주지 않도록 한다.
+- node_modules 폴더에 실행 권한을 주는 것은 로컬 환경에서만 권한을 주도록 하자.
 
 ## 설치 및 실행 시 리눅스 권한 바꾸기
 - `npm install`을 하거나 `npm run ...` 명령어를 사용할 때, root 유저로 실행하는 것은 실행되는 패키지에 악성 코드가 있을 경우 보안 문제가 발생할 수 있다. 따라서 가능하면 user 계정으로 리눅스 권한을 바꾼 뒤에 npm 명령을 실행하는 방법을 사용해야 한다.
